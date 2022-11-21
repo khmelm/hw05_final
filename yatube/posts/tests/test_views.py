@@ -9,7 +9,7 @@ from django.test import Client, TestCase, override_settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 
-from ..models import Comments, Follow, Group, Post, User
+from ..models import Comment, Follow, Group, Post, User
 
 NUM_OF_POSTS: int = 13
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
@@ -45,7 +45,7 @@ class PostPagesTests(TestCase):
             text='Тестовый пост',
             image=cls.uploaded
         )
-        cls.comment = Comments.objects.create(
+        cls.comment = Comment.objects.create(
             post=cls.post,
             author=cls.user,
             text='Тестовый комментарий'

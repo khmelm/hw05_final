@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from ..models import Comments, Follow, Group, Post, User
+from ..models import Comment, Follow, Group, Post, User
 
 NUM_OF_SYMBOLS = 15
 
@@ -20,7 +20,7 @@ class PostModelTest(TestCase):
             author=cls.author,
             text='Тестовый пост',
         )
-        cls.comment = Comments.objects.create(
+        cls.comment = Comment.objects.create(
             post=cls.post,
             author=cls.author,
             text='Тестовый комментарий'

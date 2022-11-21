@@ -3,7 +3,7 @@ from django.test import Client, TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 
-from ..models import Comments, Group, Post, User
+from ..models import Comment, Group, Post, User
 
 
 class PostPagesTests(TestCase):
@@ -34,7 +34,7 @@ class PostPagesTests(TestCase):
             text='Тестовый пост',
             image=cls.uploaded
         )
-        cls.comment = Comments.objects.create(
+        cls.comment = Comment.objects.create(
             post=cls.post,
             author=cls.user,
             text='Тестовый комментарий'
