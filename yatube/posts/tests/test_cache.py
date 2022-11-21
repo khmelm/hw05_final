@@ -44,7 +44,6 @@ class PostPagesTests(TestCase):
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
 
-
     def test_cache(self):
         """Проверяем, что кэш работает_1"""
         response_1 = self.authorized_client.get(reverse("posts:index"))
@@ -53,7 +52,7 @@ class PostPagesTests(TestCase):
         response_2 = self.authorized_client.get(reverse("posts:index"))
         response_2_context = response_2.content
         self.assertEqual(response_1_context, response_2_context)
-    
+
     def test_cashe_02(self):
         """ Проверяем, что кэш работает_2 """
         response_1 = self.client.get(reverse("posts:index"))
