@@ -16,7 +16,7 @@ def paginator(posts, page, num_of_posts=NUM_OF_POSTS):
 
 def index(request):
     template = 'posts/index.html'
-    post_list = Post.objects.all()
+    post_list = Post.objects.select_related('author', 'group')
     page_obj = paginator(post_list, request.GET.get('page'))
     context = {
         'page_obj': page_obj,
@@ -27,7 +27,7 @@ def index(request):
 def group_posts(request, slug):
     template = 'posts/group_list.html'
     group = get_object_or_404(Group, slug=slug)
-    posts = group.group_posts.all()
+    posts = group.group_posts.select_related('author', 'group')
     page_obj = paginator(posts, request.GET.get('page'))
     context = {
         'group': group,
@@ -39,7 +39,7 @@ def group_posts(request, slug):
 def profile(request, username):
     template = 'posts/profile.html'
     user = get_object_or_404(User, username=username)
-    posts = user.posts.all()
+    posts = user.posts.select_related('author', 'group').all()
     posts_count = posts.count()
     page_obj = paginator(posts, request.GET.get('page'))
     following = (
@@ -140,6 +140,5 @@ def profile_follow(request, username):
 @login_required
 def profile_unfollow(request, username):
     author = get_object_or_404(User, username=username)
-    if Follow.objects.filter(user=request.user, author=author).exists():
-        Follow.objects.filter(user=request.user, author=author).delete()
+    Follow.objects.get(user=request.user, author=author).delete()
     return redirect('posts:follow_index')
