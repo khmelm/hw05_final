@@ -48,15 +48,15 @@ class PostPagesTests(TestCase):
         """Проверяем, что кэш работает_1"""
         response_1 = self.authorized_client.get(reverse("posts:index"))
         response_1_context = response_1.content
-        cache.clear()
         response_2 = self.authorized_client.get(reverse("posts:index"))
         response_2_context = response_2.content
         self.assertEqual(response_1_context, response_2_context)
 
-    def test_caсhe_02(self):
+    def test_cache_02(self):
         """ Проверяем, что кэш работает_2 """
         response_1 = self.client.get(reverse("posts:index"))
         response_1_context = response_1.content
+        Post.objects.all().delete()
         cache.clear()
         response_2 = self.authorized_client.get(reverse("posts:index"))
         response_2_context = response_2.content
